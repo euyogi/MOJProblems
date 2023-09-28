@@ -21,6 +21,6 @@ int main() {
         if (j > 100)
             printf("Mais de 1 seculo.\n");
         else
-            printf("%d anos.", j);
+            printf("%d anos.\n", j);
     }
 }
