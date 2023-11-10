@@ -1,4 +1,6 @@
-void printarMatriz(int** M, int N) {
+#include <stdio.h>
+
+void printarMatriz(int N, int M[N][N]) {
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             if (j == 0)
@@ -10,8 +12,8 @@ void printarMatriz(int** M, int N) {
     }
 }
 
-int eliminar(int** M, int N) {
-    int eliminamos_algo = -1;
+int eliminar(int N, int M[N][N]) {
+    int eliminamos_algo = 0;
 
     for (int i = 0; i < N; ++i) {
         int apenas_uns = 1;
@@ -26,22 +28,28 @@ int eliminar(int** M, int N) {
             for (int j = 0; j < N; ++j)
                 M[i][j] = 0;
 
-            eliminamos_algo = 0;
+            eliminamos_algo = 1;
         }
     }
 
-    printarMatriz(M, N);
     return eliminamos_algo;
 }
 
-void cair(int** M, int N) {
+void cair(int N, int M[N][N]) {
+    int p;
     for (int i = 0; i < N; ++i) {
+        p = N - 1;
         for (int j = N - 1; j >= 0; --j) {
-            
+            if (M[j][i] == 1) {
+                M[j][i] = 0;
+                M[p][i] = 1;
+                --p;
+            }
         }
     }
 
-    printarMatriz(M, N);
+    printf("\n");
+    printarMatriz(N, M);
 }
 
 int main() {
@@ -57,13 +65,16 @@ int main() {
 
     int terminou = 0;
 
-    eliminar(M, N);
-    cair(M, N);
+    eliminar(N, M);
+    printarMatriz(N, M); // P
+    cair(N, M); // \n P
 
     while (!terminou) {
-        if (eliminar(M, N) == -1)
+        if (eliminar(N, M) == 0)
             break;
 
-        cair(M, N);
+        printf("\n"); // \n
+        printarMatriz(N, M); // P
+        cair(N, M); // \n P
     }
 }
